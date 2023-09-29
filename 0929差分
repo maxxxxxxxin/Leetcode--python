@@ -7,3 +7,31 @@
 请你计算塔子哥今天的监考任务能够收取多少金币？
 
 solution：差分+前缀和
+
+n = int(input())
+lines = [list(map(int , input().split())) for i in range(n)]
+
+start = min([x[0] for x in lines])
+end = max([x[1] for x in lines])
+
+cover = [0] * (end + 2) # 差分的右端点需要多一位 , 所以是end + 2
+
+for line in lines:
+    cover[line[0]] += 1
+    cover[line[1] + 1] -= 1
+
+# 求前缀和
+for i in range(start , end + 1):
+    if i == 0:
+        continue
+    cover[i] += cover[i - 1]
+
+sum_v = 0
+for i in range(start , end + 1):
+    if cover[i] == 0:
+        sum_v += 1
+    elif cover[i] == 1:
+        sum_v += 3
+    else:
+        sum_v += 4
+print(sum_v)
