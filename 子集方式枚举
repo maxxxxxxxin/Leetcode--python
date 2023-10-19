@@ -1,0 +1,27 @@
+Q : 如何找到一个最大的正整数，使得该正整数所有数位之和等于给定的正整数 X 且每个数位都不相等 (任意一个数位不能是0)。
+    输入 9 
+    输出 621
+
+A:      x = int(input())
+        st = [False] * 10
+        
+        w = [9, 8, 7, 6, 5, 4, 3, 2, 1]
+        
+        res = ""
+        
+        def dfs(num, sums, s):
+            global res
+            #首先确定终止条件
+            if num == 9:
+                if sums == x:
+                    if len(res) < len(s) or (len(res) == len(s) and res < s):
+                        res = s
+                return
+            dfs(num + 1, sums, s)  # 不选
+            dfs(num + 1, sums + w[num], s + str(w[num]))  # 选
+        
+        if x > 45:
+            print("-1")
+        else:
+            dfs(0, 0, "")
+            print(res)
