@@ -1,0 +1,47 @@
+Q : 将 N 个小玩具分装到 M 个小包装内，并将这些小包装出售。为了使商品价格具有竞争力，他希望限制小包装的总价值不超过 P，但也不希望价格太低以至于亏本。
+    单个小包装的价值为包装内部玩具数量的平方。
+    找到一种分装方案，使得小包装的总价值恰好为 P，而且如果存在多种方案，他希望选择字典序最小的那一个。
+A : #单个小包装的价值为包装内部玩具数量的平方
+    #对于每一个小包装里面的玩具个数进行枚举
+    # Q : 每一个小包装里最多可以放多少个？
+
+          import math
+          
+          n, m, p = map(int, input().split())
+          upper = min(int(math.sqrt(p)), n - (m - 1))
+          res = ""
+          
+          def dfs(inds, upper, sum_N, sum_P, ans):
+              global res
+              #边界条件
+              if sum_N > n or sum_P > p:
+                  return
+              if inds == m:
+                  if sum_N == n and sum_P == p:
+                      if len(res) == 0:
+                          res = ''.join(ans)
+                      else:
+                          res = min(res, ''.join(ans))
+                  return
+          
+              for i in range(1,upper+1):
+                  ans.append(str(i))
+                  #inds这个小包这个时候最多可以放多少文具呢？ 假设之前的 inds -1 的小包装已经放了 sum_P 个
+                  # 剩下的 m -（inds+1）里只放 1 个 则 sum_P - (m - (inds+1)) <= p 
+                  if sum_P + (m - (inds+1)) <= p :
+                      x = min(n-(sum_N - (m - (inds+1))), int(math.sqrt(p - (sum_P - (m - (inds+1))))))
+                  else:
+                      x = n-(sum_N - (m - (inds+1)))
+          
+                  dfs(inds+1, x, sum_N+i, sum_P+i*i, ans)
+                  ans.pop()
+          
+          
+          ans = []
+          dfs(0, upper, 0, 0, ans)
+          
+          k = len(res)
+          if k == 0:
+              print("-1")
+          else:
+              print(" ".join(res))
