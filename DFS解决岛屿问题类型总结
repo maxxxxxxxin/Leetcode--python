@@ -19,5 +19,28 @@ class Solution:
         return res
 
 2.封闭岛屿数量
+class Solution:
+    def closedIsland(self, grid: List[List[int]]) -> int:
+        def dfs(grid,r,c):
+            if not 0<=r<len(grid) or not 0<=c<len(grid[0]):
+                self.flag=0 #注意这里用self.flag=0 假如遇到边界，标记此时不算做岛屿
+                return 
+            if grid[r][c]!=0: #注意题目中岛屿的0，1 定义
+                return 
+            grid[r][c]=1
+            dfs(grid,r-1,c)
+            dfs(grid,r+1,c)
+            dfs(grid,r,c-1)
+            dfs(grid,r,c+1)
+                       
+        res=0
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c]==0:
+                    self.flag=1   #先假设是封闭岛屿
+                    dfs(grid,r,c) #假如不是封闭岛屿flag会置0
+                    res+=self.flag
+        return res
+
 
 
