@@ -43,27 +43,27 @@ class Solution:
         return res
 
 3. 封闭岛屿的最大面积
-    class Solution:
-        def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-            def dfs(grid,r,c):
-                if not 0<=r<len(grid) or not 0<=c<len(grid[0]):
-                    return 
-                if grid[r][c]!=1:return 
-                grid[r][c]=2
-                self.S+=1  #有一个陆地格子，面积S就+1
-                dfs(grid,r-1,c)
-                dfs(grid,r+1,c)
-                dfs(grid,r,c-1)
-                dfs(grid,r,c+1)
-                
-            res=0
-            for r in range(len(grid)):
-                for c in range(len(grid[0])):
-                    if grid[r][c]==1:
-                        self.S=0 #初试化面积S
-                        dfs(grid,r,c)  
-                        res=max(res,self.S)
-            return res
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        def dfs(grid,r,c):
+            if not 0<=r<len(grid) or not 0<=c<len(grid[0]):
+                return 
+            if grid[r][c]!=1:return 
+            grid[r][c]=2
+            self.S+=1  #有一个陆地格子，面积S就+1
+            dfs(grid,r-1,c)
+            dfs(grid,r+1,c)
+            dfs(grid,r,c-1)
+            dfs(grid,r,c+1)
+            
+        res=0
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c]==1:
+                    self.S=0 #初试化面积S
+                    dfs(grid,r,c)  
+                    res=max(res,self.S)
+        return res
 
 
 
