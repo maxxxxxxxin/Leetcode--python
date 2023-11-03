@@ -16,3 +16,5 @@ index3 = bisec_right(ls, x)
 
 from itertools import accumulate
 
+str.find(str)
+
